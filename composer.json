@@ -1,0 +1,21 @@
+{
+    "autoload": {
+        "psr-4": {
+            "ES101\\": "src/ES101"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ES101\\Tests\\Unit\\": "tests/unit"
+        }
+    },
+    "require": {
+        "eventsauce/eventsauce": "^3.2",
+        "ramsey/uuid": "^4.7",
+        "moneyphp/money": "^3.3"
+    },
+    "require-dev": {
+        "eventsauce/test-utilities": "^3.2",
+        "eventsauce/code-generation": "^3.0"
+    }
+}
