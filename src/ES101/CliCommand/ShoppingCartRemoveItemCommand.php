@@ -14,11 +14,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
-    name: 'cart:item:add',
-    description: 'Add an item to the cart.',
+    name: 'cart:item:remove',
+    description: 'Remove an item from the cart.',
     hidden: false
 )]
-class ShoppingCartAddItemCommand extends Command
+class ShoppingCartRemoveItemCommand extends Command
 {
     public function __construct(private readonly EventSourcedAggregateRootRepository $repository)
     {
@@ -30,7 +30,6 @@ class ShoppingCartAddItemCommand extends Command
         $this
             ->addArgument('cart_id', InputArgument::REQUIRED, 'cart id')
             ->addArgument('product_id', InputArgument::REQUIRED, 'product id')
-            ->addArgument('qty', InputArgument::OPTIONAL, 'qty')
         ;
     }
 
@@ -41,10 +40,10 @@ class ShoppingCartAddItemCommand extends Command
         $qty = $input->getArgument('qty') ?? 1;
 
         $prod = Product::products[$product_id];
-        $product = new Product($product_id);
+        $product = new Product($product_id, $prod[0], $qty, Money::USD($prod[1]));
 
         $cart = $this->repository->retrieve($cart_id);
-        $command = new AddItem($product, $qty);
+        $command = new AddItem($product);
         
         $cart->process($command);
         

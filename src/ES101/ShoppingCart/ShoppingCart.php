@@ -4,6 +4,7 @@ namespace ES101\ShoppingCart;
 
 use ES101\ShoppingCart\Event\CartWasInitialized;
 use ES101\ShoppingCart\Event\ItemWasAdded;
+use ES101\ShoppingCart\Event\ItemWasRemoved;
 use EventSauce\EventSourcing\AggregateRoot;
 use EventSauce\EventSourcing\AggregateRootBehaviour;
 
@@ -42,6 +43,17 @@ class ShoppingCart implements AggregateRoot
 
     public function applyItemWasAdded(ItemWasAdded $event): void
     {
-        $this->items[] = $event->product;
+        $this->items[$event->line_item->product->id] = $event->line_item;
+    }
+
+    public function applyItemWasRemoved(ItemWasRemoved $event): void
+    {
+        $product = $event->product();
+        unset($this->items[$product->id]);
+    }
+
+    public function getItems(): array
+    {
+        return $this->items;
     }
 }

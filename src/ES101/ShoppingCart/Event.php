@@ -2,6 +2,8 @@
 
 namespace ES101\ShoppingCart;
 
-interface Event
+use EventSauce\EventSourcing\Serialization\SerializablePayload;
+
+interface Event extends SerializablePayload
 {
 }
