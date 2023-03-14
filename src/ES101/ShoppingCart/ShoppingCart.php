@@ -2,6 +2,7 @@
 
 namespace ES101\ShoppingCart;
 
+use ES101\ShoppingCart\Event\CartWasInitialized;
 use ES101\ShoppingCart\Event\ItemWasAdded;
 use EventSauce\EventSourcing\AggregateRoot;
 use EventSauce\EventSourcing\AggregateRootBehaviour;
@@ -16,7 +17,10 @@ class ShoppingCart implements AggregateRoot
 
     public static function make(ShoppingCartId $aggregate_root_id): self
     {
-        return new self($aggregate_root_id);
+        $cart = new self($aggregate_root_id);
+        $cart->recordThat(new CartWasInitialized());
+
+        return $cart;
     }
 
     public function process(Command ...$commands): void
@@ -30,7 +34,14 @@ class ShoppingCart implements AggregateRoot
         }
     }
 
-    public function applyItemWasAdded(ItemWasAdded $event) {
+    public function applyCartWasInitialized(CartWasInitialized $event): void
+    {
+        $this->items = [];
+        $this->status = '';
+    }
+
+    public function applyItemWasAdded(ItemWasAdded $event): void
+    {
         $this->items[] = $event->product;
     }
 }

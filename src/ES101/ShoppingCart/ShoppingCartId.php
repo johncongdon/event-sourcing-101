@@ -1,6 +1,6 @@
 <?php
 
-namespace ES101\ES101\ShoppingCart;
+namespace ES101\ShoppingCart;
 
 use EventSauce\EventSourcing\AggregateRootId;
 use Ramsey\Uuid\Uuid;
@@ -33,5 +33,10 @@ class ShoppingCartId implements AggregateRootId
     public function getUuid(): UuidInterface
     {
         return $this->uuid;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 }

@@ -7,7 +7,13 @@ use Money\Money;
 
 class Product
 {
-    public function __construct(public readonly int $id, public readonly string $item_name, public readonly int $qty, public readonly Money $price)
+    public const products = [
+        1 => ['Magazine', 499],
+        2 => ['Book', 1999],
+        3 => ['Elephpant', 3000],
+        4 => ['php[tek]', 70000],
+    ];
+    public function __construct(public readonly int $id, public readonly string $name, public readonly int $qty, public readonly Money $price)
     {
     }
 
@@ -15,7 +21,7 @@ class Product
     {
         return [
             'id' => $this->id,
-            'name' => $this->item_name,
+            'name' => $this->name,
             'qty' => $this->qty,
             'price' => json_encode($this->price, JSON_THROW_ON_ERROR),
         ];
