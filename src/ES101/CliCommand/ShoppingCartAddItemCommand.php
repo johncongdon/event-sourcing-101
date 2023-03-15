@@ -42,12 +42,16 @@ class ShoppingCartAddItemCommand extends Command
 
         $product = $this->product_service->findById($product_id);
 
+        /** @var \ES101\ShoppingCart\ShoppingCart $cart */
         $cart = $this->repository->retrieve($cart_id);
         $command = new AddItem($product, $qty);
 
         $cart->process($command);
 
         $this->repository->persist($cart);
+        if ($cart->aggregateRootVersion() % 100 === 0) {
+            $this->repository->storeSnap
+        }
 
         return Command::SUCCESS;
     }

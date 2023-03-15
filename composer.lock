@@ -4,8 +4,66 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d51527e7d26264b9c98938a518aceae2",
+    "content-hash": "15e1ec5e911406d5c019cc9df14236c2",
     "packages": [
+        {
+            "name": "andreo/eventsauce-snapshotting",
+            "version": "3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eventsauce-symfony/eventsauce-snapshotting.git",
+                "reference": "088602b471445fd78803e63ae8405ddf67c8a175"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eventsauce-symfony/eventsauce-snapshotting/zipball/088602b471445fd78803e63ae8405ddf67c8a175",
+                "reference": "088602b471445fd78803e63ae8405ddf67c8a175",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^3.5",
+                "eventsauce/eventsauce": "^3.0",
+                "eventsauce/uuid-encoding": "^0.4",
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "andreo/eventsauce-aggregate": "dev-main",
+                "eventsauce/test-utilities": "^3.0",
+                "phpstan/phpstan": "^1.3",
+                "phpunit/phpunit": "^9.4",
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Andreo\\EventSauce\\Snapshotting\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrzej Pakula",
+                    "email": "andrze.pakula@gmail.com"
+                }
+            ],
+            "description": "Extended snapshot components for EventSauce.",
+            "keywords": [
+                "EventSauce",
+                "components",
+                "snapshotting"
+            ],
+            "support": {
+                "issues": "https://github.com/eventsauce-symfony/eventsauce-snapshotting/issues",
+                "source": "https://github.com/eventsauce-symfony/eventsauce-snapshotting/tree/3.3"
+            },
+            "time": "2023-02-25T16:34:48+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.10.2",

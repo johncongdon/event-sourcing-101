@@ -2,19 +2,21 @@
 
 require 'vendor/autoload.php';
 
+use Andreo\EventSauce\Snapshotting\Doctrine\DoctrineSnapshotRepository;
 use Doctrine\DBAL\DriverManager;
 use ES101\CliCommand\ShoppingCartAddItemCommand;
 use ES101\CliCommand\ShoppingCartInitCommand;
 use ES101\ShoppingCart\ShoppingCart;
 use ES101\ShoppingCart\ShoppingCartTableSchema;
 use EventSauce\EventSourcing\Serialization\ConstructingMessageSerializer;
+use EventSauce\EventSourcing\Snapshotting\ConstructingAggregateRootRepositoryWithSnapshotting;
 use EventSauce\MessageRepository\DoctrineMessageRepository\DoctrineUuidV4MessageRepository;
 use EventSauce\EventSourcing\EventSourcedAggregateRootRepository;
 use EventSauce\EventSourcing\SynchronousMessageDispatcher;
 use Symfony\Component\Console\Application;
 
 $connectionParams = [
-  'dbname' => 'es101-4',
+  'dbname' => 'es101-5',
   'user' => 'root',
   'password' => 'root_pw',
   #  'password' => 'pb_pass123',
@@ -41,6 +43,25 @@ $aggregateRootRepository = new EventSourcedAggregateRootRepository(
     $messageRepository,
     $messageDispatcher
 );
+
+$snapshot_serializer = new \Andreo\EventSauce\Snapshotting\Serializer\ConstructingSnapshotStateSerializer(new \EventSauce\EventSourcing\Serialization\DefaultPayloadSerializer(), new EventSauce\Clock\SystemClock(), new \EventSauce\EventSourcing\ExplicitlyMappedClassNameInflector());
+
+$snapshotRepository = new DoctrineSnapshotRepository(
+    connection: $conn, // Doctrine\DBAL\Connection
+    tableName: $tableName,
+    serializer: new \Andreo\EventSauce\Snapshotting\Serializer\ConstructingSnapshotStateSerializer($payloadSerializer, $clock, $classNameInflector)
+    uuidEncoder: $uuidEncoder, // EventSauce\UuidEncoding\UuidEncoder
+    tableSchema: $tableSchema // Andreo\EventSauce\Snapshotting\Repository\Table\SnapshotTableSchema
+)
+
+
+$aggregateRepository = new ConstructingAggregateRootRepositoryWithSnapshotting(
+    ShoppingCart::class,
+    $messageRepository,
+    $snapshotRepository,
+    $aggregateRootRepository
+);
+
 
 $application = new Application();
 
