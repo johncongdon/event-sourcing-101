@@ -7,7 +7,7 @@ use ES101\ShoppingCart\Event;
 
 class ItemWasRemoved implements Event
 {
-    public function __construct(private Product $product)
+    public function __construct(public readonly Product $product)
     {
     }
 

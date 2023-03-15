@@ -6,7 +6,7 @@ use EventSauce\EventSourcing\Serialization\ConstructingMessageSerializer;
 use EventSauce\MessageRepository\DoctrineMessageRepository\DoctrineUuidV4MessageRepository;
 
 $connectionParams = [
-    'dbname' => 'es101',
+    'dbname' => 'es101-7',
     'user' => 'root',
     'password' => 'root_pw',
     #  'password' => 'pb_pass123',
