@@ -35,6 +35,7 @@ class ShoppingCartTableSchema implements TableSchema
     {
         return [
             'event_type' => '__event_type',
+            'user_agent' => 'user-agent',
         ];
     }
 }
