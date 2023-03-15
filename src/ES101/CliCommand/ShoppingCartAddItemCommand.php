@@ -44,9 +44,9 @@ class ShoppingCartAddItemCommand extends Command
 
         $cart = $this->repository->retrieve($cart_id);
         $command = new AddItem($product, $qty);
-        
+
         $cart->process($command);
-        
+
         $this->repository->persist($cart);
 
         return Command::SUCCESS;

@@ -14,7 +14,7 @@ use EventSauce\EventSourcing\SynchronousMessageDispatcher;
 use Symfony\Component\Console\Application;
 
 $connectionParams = [
-  'dbname' => 'es101-3',
+  'dbname' => 'es101-4',
   'user' => 'root',
   'password' => 'root_pw',
   #  'password' => 'pb_pass123',
