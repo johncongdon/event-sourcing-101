@@ -14,7 +14,7 @@ use EventSauce\EventSourcing\SynchronousMessageDispatcher;
 use Symfony\Component\Console\Application;
 
 $connectionParams = [
-  'dbname' => 'es101',
+  'dbname' => 'es101-3',
   'user' => 'root',
   'password' => 'root_pw',
   #  'password' => 'pb_pass123',
@@ -33,6 +33,7 @@ $messageRepository = new DoctrineUuidV4MessageRepository(
 );
 
 $messageDispatcher = new SynchronousMessageDispatcher(
+    new \ES101\ShoppingCart\Projector\UserMapperProjection($conn)
 );
 
 $aggregateRootRepository = new EventSourcedAggregateRootRepository(
