@@ -2,6 +2,7 @@
 
 namespace ES101\ShoppingCart;
 
+use ES101\ShoppingCart\Command\InitializeCart;
 use ES101\ShoppingCart\Event\CartWasInitialized;
 use ES101\ShoppingCart\Event\ItemWasAdded;
 use ES101\ShoppingCart\Event\ItemWasRemoved;
@@ -16,10 +17,12 @@ class ShoppingCart implements AggregateRoot
 
     private array $items = [];
 
+    private ShoppingCartStatus $status;
+
     public static function make(ShoppingCartId $aggregate_root_id): self
     {
         $cart = new self($aggregate_root_id);
-        $cart->recordThat(new CartWasInitialized());
+        $cart->process(new InitializeCart());
 
         return $cart;
     }
@@ -27,6 +30,7 @@ class ShoppingCart implements AggregateRoot
     public function process(Command ...$commands): void
     {
         foreach ($commands as $command) {
+            $this->guard($command);
             $events = $command->execute($this);
 
             foreach ($events as $event) {
@@ -38,7 +42,7 @@ class ShoppingCart implements AggregateRoot
     public function applyCartWasInitialized(CartWasInitialized $event): void
     {
         $this->items = [];
-        $this->status = '';
+        $this->status = ShoppingCartStatus::Shopping;
     }
 
     public function applyItemWasAdded(ItemWasAdded $event): void
@@ -55,5 +59,21 @@ class ShoppingCart implements AggregateRoot
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    private function guard(Command $command)
+    {
+        $this->assertCartIsInitialized($command);
+    }
+
+    private function assertCartIsInitialized(Command $command)
+    {
+        if ($command instanceof InitializeCart) {
+            return;
+        }
+
+        if (!isset($this->status)) {
+            throw new \InvalidArgumentException('Cart Must be initialized');
+        }
     }
 }

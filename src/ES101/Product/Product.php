@@ -27,6 +27,7 @@ class Product
     {
         $this->id = $data['id'];
         $this->name = $data['name'];
-        $this->price = Money::USD($data['amount']);
+        $price = json_decode($data['price'], 1, 512, JSON_THROW_ON_ERROR);
+        $this->price = Money::USD($price['amount']);
     }
 }
