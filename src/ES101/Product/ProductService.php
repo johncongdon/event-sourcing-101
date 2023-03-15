@@ -2,6 +2,8 @@
 
 namespace ES101\Product;
 
+use Money\Money;
+
 class ProductService
 {
     private const PRODUCTS = [
@@ -13,6 +15,6 @@ class ProductService
 
     public function findById(int $id): Product
     {
-        return new Product($id, self::PRODUCTS[$id]['name'], self::PRODUCTS[$id]['price']);
+        return new Product($id, self::PRODUCTS[$id]['name'], Money::USD(self::PRODUCTS[$id]['price']));
     }
 }
