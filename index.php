@@ -46,7 +46,7 @@ $aggregateRootRepository = new EventSourcedAggregateRootRepository(
 $application = new Application();
 
 $application->add(new ShoppingCartInitCommand($aggregateRootRepository));
-$application->add(new ShoppingCartAddItemCommand($aggregateRootRepository));
+$application->add(new ShoppingCartAddItemCommand($aggregateRootRepository, new \ES101\Product\ProductService()));
 $application->add(new \ES101\CliCommand\ShoppingCartRemoveItemCommand($aggregateRootRepository));
 $application->add(new \ES101\CliCommand\ShoppingCartAdjustItemQtyCommand($aggregateRootRepository));
 $application->add(new \ES101\CliCommand\ShoppingCartListItemsCommand($aggregateRootRepository));

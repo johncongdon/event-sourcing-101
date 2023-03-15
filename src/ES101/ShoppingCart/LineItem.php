@@ -7,7 +7,7 @@ use Money\Money;
 
 class LineItem
 {
-    public function __construct(public readonly Product $product, public readonly Money $price, public readonly int $qty)
+    public function __construct(public readonly Product $product, public readonly int $qty)
     {
     }
 }

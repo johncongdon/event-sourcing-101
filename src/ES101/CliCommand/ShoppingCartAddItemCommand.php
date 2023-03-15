@@ -2,7 +2,7 @@
 
 namespace ES101\CliCommand;
 
-use ES101\Product\Product;
+use ES101\Product\ProductService;
 use ES101\ShoppingCart\Command\AddItem;
 use ES101\ShoppingCart\ShoppingCartId;
 use EventSauce\EventSourcing\EventSourcedAggregateRootRepository;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ShoppingCartAddItemCommand extends Command
 {
-    public function __construct(private readonly EventSourcedAggregateRootRepository $repository)
+    public function __construct(private readonly EventSourcedAggregateRootRepository $repository, private readonly ProductService $product_service)
     {
         parent::__construct();
     }
@@ -40,8 +40,7 @@ class ShoppingCartAddItemCommand extends Command
         $product_id = $input->getArgument('product_id');
         $qty = $input->getArgument('qty') ?? 1;
 
-        $prod = Product::products[$product_id];
-        $product = new Product($product_id);
+        $product = $this->product_service->findById($product_id);
 
         $cart = $this->repository->retrieve($cart_id);
         $command = new AddItem($product, $qty);

@@ -2,7 +2,7 @@
 
 namespace ES101\ShoppingCart\Command;
 
-use ES101\Product\Product;
+use ES101\Product\ProductService;
 use ES101\ShoppingCart\Command;
 use ES101\ShoppingCart\Event\ItemWasAdded;
 use ES101\ShoppingCart\Event\ItemWasRemoved;
@@ -29,7 +29,7 @@ class SetQty implements Command
         $cart_item = $items[$this->product_id];
         if ($this->qty === 0) {
             return [
-                new ItemWasRemoved(new Product($this->product_id)),
+                new ItemWasRemoved(new ProductService($this->product_id)),
             ];
         }
 

@@ -2,7 +2,7 @@
 
 namespace ES101\CliCommand;
 
-use ES101\Product\Product;
+use ES101\Product\ProductService;
 use ES101\ShoppingCart\Command\AddItem;
 use ES101\ShoppingCart\ShoppingCartId;
 use EventSauce\EventSourcing\EventSourcedAggregateRootRepository;
@@ -39,8 +39,8 @@ class ShoppingCartRemoveItemCommand extends Command
         $product_id = $input->getArgument('product_id');
         $qty = $input->getArgument('qty') ?? 1;
 
-        $prod = Product::products[$product_id];
-        $product = new Product($product_id, $prod[0], $qty, Money::USD($prod[1]));
+        $prod = ProductService::products[$product_id];
+        $product = new ProductService($product_id, $prod[0], $qty, Money::USD($prod[1]));
 
         $cart = $this->repository->retrieve($cart_id);
         $command = new AddItem($product);

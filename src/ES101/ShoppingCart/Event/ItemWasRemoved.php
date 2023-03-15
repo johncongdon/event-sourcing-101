@@ -2,16 +2,16 @@
 
 namespace ES101\ShoppingCart\Event;
 
-use ES101\Product\Product;
+use ES101\Product\ProductService;
 use ES101\ShoppingCart\Event;
 
 class ItemWasRemoved implements Event
 {
-    public function __construct(private Product $product)
+    public function __construct(private ProductService $product)
     {
     }
 
-    public function product(): Product
+    public function product(): ProductService
     {
         return $this->product;
     }

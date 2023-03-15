@@ -2,7 +2,7 @@
 
 namespace ES101\CliCommand;
 
-use ES101\Product\Product;
+use ES101\Product\ProductService;
 use ES101\ShoppingCart\Command\AddItem;
 use ES101\ShoppingCart\ShoppingCartId;
 use EventSauce\EventSourcing\EventSourcedAggregateRootRepository;
