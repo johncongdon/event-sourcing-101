@@ -50,7 +50,7 @@ class ShoppingCartListItemsCommand extends Command
             $numberFormatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
             $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
 
-            print "Product #{$item->product->id}    Qty: {$item->qty}: " . $moneyFormatter->format($item->price) . "\n";
+            print "Product #{$item->product->id}    Qty: {$item->qty}: " . $moneyFormatter->format($item->product->price) . "\n";
         }
 
         return Command::SUCCESS;
