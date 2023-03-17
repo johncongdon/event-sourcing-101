@@ -7,7 +7,7 @@ class ProductService
     private const PRODUCTS = [
         1 => ['name' => 'Magazine', 'price' => 499],
         2 => ['name' => 'Book', 'price' => 1999],
-        3 => ['name' => 'Elephpant', 'price' => 3000],
+        3 => ['name' => 'Elephant', 'price' => 3000],
         4 => ['name' => 'php[tek]', 'price' => 70000],
     ];
 
